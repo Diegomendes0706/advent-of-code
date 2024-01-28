@@ -1020,7 +1020,6 @@ sxfvfdkff8dvlmbdktsixmzpnxzmml2
 
 
 linhas = lista.split("\n")
-
 total = somar_digitos(pegar_numeros(linhas))
 
 print(total)
