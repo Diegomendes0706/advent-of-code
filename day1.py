@@ -1,3 +1,21 @@
+def pegar_numeros(texto):
+    numeros = []
+    for linha in texto:
+        numeros.append( "".join(filter(str.isdigit, linha)))
+    return numeros
+
+
+def somar_digitos(lista_de_numeros):
+    lista_de_digitos = []
+    for numero in lista_de_numeros:
+        digitos = numero[0] + numero[-1]
+        lista_de_digitos.append(int(digitos))
+    soma = sum(lista_de_digitos)
+    return soma
+
+
+
+
 lista = """2xjzgsjzfhzhm1
 qhklfjd39rpjxhqtftwopfvrrj2eight
 95btwo
@@ -1002,22 +1020,6 @@ sxfvfdkff8dvlmbdktsixmzpnxzmml2
 
 
 linhas = lista.split("\n")
-
-def pegar_numeros(texto):
-    numeros = []
-    for linha in texto:
-        numeros.append( "".join(filter(str.isdigit, linha)))
-    return numeros
-
-
-def somar_digitos(lista_de_numeros):
-    lista_de_digitos = []
-    for numero in lista_de_numeros:
-        digitos = numero[0] + numero[-1]
-        lista_de_digitos.append(int(digitos))
-    soma = sum(lista_de_digitos)
-    return soma
-
 
 total = somar_digitos(pegar_numeros(linhas))
 
