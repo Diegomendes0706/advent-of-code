@@ -147,11 +147,11 @@ for game in games:
                 blues.append(extract_numbers(color))
             else:
                 greens.append(extract_numbers(color))
-    moves[name] = {"red": sum(reds), "green": sum(greens), "blue": sum(blues)}
-    if sum(reds) > 12 and sum(blues) > 14 and sum(greens) > 13:
+                
+    if sum(reds) >= 12 and sum(blues) >= 14 and sum(greens) >= 13:
         total += extract_numbers(name)
         
 
-print(moves)
+print(total)
     
     
