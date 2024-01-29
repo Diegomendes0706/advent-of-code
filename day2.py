@@ -10,15 +10,39 @@ def extract_numbers(input_string):
 def check_max(list, max):
     return all (x <= max for x in list)
 
+def get_ids(text):
+    moves = {}
+    games = text.split("\n")
+    total = 0
 
+    for game in games:
+        set = game.split(";")
+        name = set[0].split(":")[0]
+        set[0] = set[0].removeprefix(name+": ")
+        moves[name] = set
+        reds = []
+        blues = []
+        greens = []
 
+        for cube in moves[name]:
+            colors = cube.split(",")
 
-
-maximum = {
-    "red": 12,
-    "green": 13,
-    "blue": 14,
-}
+            for color in colors:
+                if "red" in color:
+                    if extract_numbers(color) > 12: 
+                        moves[name] = False
+                    reds.append(extract_numbers(color))
+                elif "blue" in color:
+                    if extract_numbers(color) > 14: 
+                        moves[name] = False
+                    blues.append(extract_numbers(color))
+                else:
+                    if extract_numbers(color) > 13: 
+                        moves[name] = False
+                    greens.append(extract_numbers(color))
+        if moves[name] is not False:
+            total += extract_numbers(name)
+    return total
 
 
 text_games = """Game 1: 10 red, 7 green, 3 blue; 5 blue, 3 red, 10 green; 4 blue, 14 green, 7 red; 1 red, 11 green; 6 blue, 17 green, 15 red; 18 green, 7 red, 5 blue
@@ -124,34 +148,4 @@ Game 100: 16 red, 3 blue; 2 red, 5 green; 9 red; 1 blue, 3 green, 10 red; 1 red,
 
 
 
-moves = {}
-games = text_games.split("\n")
-total = 0
-
-for game in games:
-    set = game.split(";")
-    name = set[0].split(":")[0]
-    set[0] = set[0].removeprefix(name+": ")
-    moves[name] = set
-    reds = []
-    blues = []
-    greens = []
-
-    for cube in moves[name]:
-        colors = cube.split(",")
-
-        for color in colors:
-            if "red" in color:
-                reds.append(extract_numbers(color))
-            elif "blue" in color:
-                blues.append(extract_numbers(color))
-            else:
-                greens.append(extract_numbers(color))
-                
-    if sum(reds) >= 12 and sum(blues) >= 14 and sum(greens) >= 13:
-        total += extract_numbers(name)
-        
-
-print(total)
-    
-    
+print(get_ids(text_games))
