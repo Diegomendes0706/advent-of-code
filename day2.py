@@ -5,9 +5,20 @@ def extract_numbers(input_string):
     numbers = re.findall(r'\d+', input_string)
     if numbers:
         return int(''.join(numbers))
+    
+
+def check_max(list, max):
+    return all (x <= max for x in list)
 
 
 
+
+
+maximum = {
+    "red": 12,
+    "green": 13,
+    "blue": 14,
+}
 
 
 text_games = """Game 1: 10 red, 7 green, 3 blue; 5 blue, 3 red, 10 green; 4 blue, 14 green, 7 red; 1 red, 11 green; 6 blue, 17 green, 15 red; 18 green, 7 red, 5 blue
@@ -117,34 +128,30 @@ moves = {}
 games = text_games.split("\n")
 total = 0
 
-
 for game in games:
     set = game.split(";")
     name = set[0].split(":")[0]
     set[0] = set[0].removeprefix(name+": ")
     moves[name] = set
-    reds = 0
-    blues = 0
-    greens = 0
+    reds = []
+    blues = []
+    greens = []
 
     for cube in moves[name]:
         colors = cube.split(",")
 
         for color in colors:
             if "red" in color:
-                reds += extract_numbers(color)
+                reds.append(extract_numbers(color))
             elif "blue" in color:
-                blues += extract_numbers(color)
+                blues.append(extract_numbers(color))
             else:
-                greens += extract_numbers(color)
-    moves[name] = {"red": reds, "green": greens, "blue": blues}
-    if moves[name]["red"] > 12 or moves[name]["green"] > 13 or moves[name]["blue"] > 14:
-        pass
-    else:
+                greens.append(extract_numbers(color))
+    moves[name] = {"red": sum(reds), "green": sum(greens), "blue": sum(blues)}
+    if sum(reds) > 12 and sum(blues) > 14 and sum(greens) > 13:
         total += extract_numbers(name)
+        
 
-
-
-print(total)
+print(moves)
     
     
