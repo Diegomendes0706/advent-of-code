@@ -1,51 +1,5 @@
-import re
-
-
-def extract_numbers(input_string):
-    numbers = re.findall(r'\d+', input_string)
-    if numbers:
-        return int(''.join(numbers))
-    
-
-def check_max(list, max):
-    return all (x <= max for x in list)
-
-def get_ids(text):
-    moves = {}
-    games = text.split("\n")
-    total = 0
-
-    for game in games:
-        set = game.split(";")
-        name = set[0].split(":")[0]
-        set[0] = set[0].removeprefix(name+": ")
-        moves[name] = set
-        reds = []
-        blues = []
-        greens = []
-
-        for cube in moves[name]:
-            colors = cube.split(",")
-
-            for color in colors:
-                if "red" in color:
-                    if extract_numbers(color) > 12: 
-                        moves[name] = False
-                    reds.append(extract_numbers(color))
-                elif "blue" in color:
-                    if extract_numbers(color) > 14: 
-                        moves[name] = False
-                    blues.append(extract_numbers(color))
-                else:
-                    if extract_numbers(color) > 13: 
-                        moves[name] = False
-                    greens.append(extract_numbers(color))
-        if moves[name] is not False:
-            total += extract_numbers(name)
-    return total
-
-
-text_games = """Game 1: 10 red, 7 green, 3 blue; 5 blue, 3 red, 10 green; 4 blue, 14 green, 7 red; 1 red, 11 green; 6 blue, 17 green, 15 red; 18 green, 7 red, 5 blue
+def text():
+    return """Game 1: 10 red, 7 green, 3 blue; 5 blue, 3 red, 10 green; 4 blue, 14 green, 7 red; 1 red, 11 green; 6 blue, 17 green, 15 red; 18 green, 7 red, 5 blue
 Game 2: 13 green, 10 red; 11 green, 1 blue, 7 red; 5 red, 12 green, 1 blue; 12 green, 6 red; 8 green, 5 red; 12 green, 1 red
 Game 3: 7 green, 1 blue; 1 blue, 3 green, 1 red; 1 green, 1 blue; 2 green; 1 blue, 7 green, 2 red; 2 green
 Game 4: 7 green, 11 blue; 12 blue, 7 green; 1 green, 7 blue; 5 blue, 2 green; 5 red, 9 green, 14 blue
@@ -145,7 +99,3 @@ Game 97: 4 red, 1 blue, 2 green; 2 green, 11 red, 1 blue; 8 red, 1 green; 7 red,
 Game 98: 6 green, 4 blue, 12 red; 3 blue, 13 red, 1 green; 2 blue, 12 green, 2 red; 13 green, 2 red, 1 blue; 10 red, 7 green, 1 blue
 Game 99: 6 blue, 3 green, 5 red; 3 green, 6 red, 8 blue; 3 green, 11 blue, 14 red; 14 red, 5 green, 1 blue
 Game 100: 16 red, 3 blue; 2 red, 5 green; 9 red; 1 blue, 3 green, 10 red; 1 red, 5 blue, 3 green; 12 blue, 9 red"""
-
-
-
-print(get_ids(text_games))
