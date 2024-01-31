@@ -31,15 +31,13 @@ def get_ids(text):
                 if "red" in color:
                     if extract_numbers(color) > 12: 
                         moves[name] = False
-                    reds.append(extract_numbers(color))
                 elif "blue" in color:
                     if extract_numbers(color) > 14: 
                         moves[name] = False
-                    blues.append(extract_numbers(color))
                 else:
                     if extract_numbers(color) > 13: 
                         moves[name] = False
-                    greens.append(extract_numbers(color))
+                        
         if moves[name] is not False:
             total += extract_numbers(name)
     return total
