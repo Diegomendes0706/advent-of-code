@@ -1,4 +1,11 @@
 from text import text_file 
+import re
+
+
+def get_numbers(x):
+    return re.findall(r'\d+', x)
+
+
 
 symbols = "-/@=$%*&#+"
 numbers = "1234567890"
@@ -7,12 +14,15 @@ i_numbers = {}
 i_symbols = {}
 lines = tf.split("\n")
 
-for line in range(len(lines)):
-    i_numbers[line] = [i for i, n in enumerate(lines[line]) if n in numbers]
-    i_symbols[line] = [i for i, n in enumerate(lines[line]) if n in symbols]
-    
-    for place in i_numbers:
-        if i_symbols[line]:
-            beside = i_symbols[line][place-1] == place-1  or i_symbols[line][place+1] == place+1
-        print(lines[line], beside)
-    
+part_numbers = []
+
+for i, line in enumerate(lines):
+    i_numbers[i] = [index for index, n in enumerate(line) if n in numbers]
+    i_symbols[i] = [index for index, n in enumerate(line) if n in symbols]
+
+    for j in i_numbers[i]:
+        if (j+1) in i_symbols[i] or (j-1) in i_symbols[i]:
+            part_numbers.append(int(line[j]))
+
+
+print(part_numbers) 
